@@ -1,4 +1,4 @@
-package com.example.quoti;
+package com.oussama1598.quoti;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

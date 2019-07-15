@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quoti/pages/favorites.dart';
 import 'package:quoti/pages/home.dart';
 import 'package:quoti/scoped-models/quotes.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -19,9 +20,15 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.blue,
           brightness: Brightness.dark,
         ),
-        home: HomePage(
-          quotesModel: _quotesModel,
-        ),
+        initialRoute: '/',
+        routes: {
+          '/': (BuildContext context) => HomePage(
+                quotesModel: _quotesModel,
+              ),
+          '/favorites': (BuildContext context) => FavoritesPage(
+                quotesModel: _quotesModel,
+              ),
+        },
       ),
     );
   }

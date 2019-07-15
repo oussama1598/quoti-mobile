@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:quoti/models/quote.dart';
 import 'package:quoti/widgets/quote/bottomBar.dart';
 
 class QuoteCard extends StatelessWidget {
-  final String quote;
-  final String author;
+  final Quote quote;
   final MaterialColor cardColor;
+  final Function toggleFavorite;
 
-  QuoteCard({this.quote, this.author, this.cardColor});
+  QuoteCard(
+      {this.quote,
+      this.cardColor,
+      this.toggleFavorite});
 
   Widget _buildQuoteContent(BuildContext context) {
     return Column(
@@ -19,7 +23,7 @@ class QuoteCard extends StatelessWidget {
             horizontal: 15,
           ),
           child: Text(
-            quote,
+            quote.quote,
             style: TextStyle(
               fontSize: 50,
               fontWeight: FontWeight.bold,
@@ -32,7 +36,7 @@ class QuoteCard extends StatelessWidget {
           ),
           alignment: Alignment.centerRight,
           child: Text(
-            author,
+            quote.author,
             style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 20,
@@ -68,7 +72,10 @@ class QuoteCard extends StatelessWidget {
               ],
             ),
           ),
-          BottomBar(),
+          BottomBar(
+            toggleFavorite: toggleFavorite,
+            quote: quote,
+          ),
         ],
       ),
     );

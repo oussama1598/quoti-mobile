@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    widget.quotesModel.loadDatabase();
     widget.quotesModel.fetchDailyQuote();
 
     super.initState();
@@ -40,14 +41,18 @@ class _HomePageState extends State<HomePage> {
           (int index, Quote quote) => MapEntry(
             index,
             QuoteCard(
-              quote: quote.quote,
-              author: quote.author,
+              quote: quote,
               cardColor: colors[index],
+              toggleFavorite: model.toggleFavorite,
             ),
           ),
         )
         .values
         .toList());
+  }
+
+  void _onFavoritePageButtonPressed(BuildContext context) {
+    Navigator.of(context).pushNamed('/favorites');
   }
 
   @override
@@ -60,15 +65,18 @@ class _HomePageState extends State<HomePage> {
               PageView(
                 children: _buildQuotesCards(model),
               ),
-              Positioned(
-                top: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: TopBar(
-                  title: 'Quoti',
-                  onRefreshButtonPressed:
-                      model.isLoading ? null : model.fetchDailyQuote,
-                ),
+              TopBar(
+                title: 'Quoti',
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.refresh),
+                    onPressed: model.isLoading ? null : model.fetchDailyQuote,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.favorite),
+                    onPressed: () => _onFavoritePageButtonPressed(context),
+                  )
+                ],
               ),
             ],
           );
